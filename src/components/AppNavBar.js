@@ -3,7 +3,7 @@
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 
-const AppNavbar = () => (
+const AppNavBar = () => (
   <Navbar bg="light" expand="lg">
     <Container>
       <Navbar.Brand href="/">Demeter Delivery</Navbar.Brand>
@@ -20,4 +20,4 @@ const AppNavbar = () => (
   </Navbar>
 );
 
-export default AppNavbar;
+export default AppNavBar;

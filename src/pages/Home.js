@@ -1,13 +1,13 @@
 // src/pages/Home.js
 import React from 'react';
-import AppNavbar from '../components/Navbar';
+import AppNavBar from '../components/AppNavBar';
+import SearchBar from '../components/SearchBar';
 
 const Home = () => (
   <div>
-    <AppNavbar />
+    <AppNavBar />
     <SearchBar />
-    <RestaurantList />
-    <Footer />
+   
   </div>
 );
 
