@@ -1,4 +1,5 @@
 // src/components/RestaurantCard.js
+// Este componente representará cada tarjeta de restaurante individualmente, con una imagen, nombre, tipo, tiempo de entrega, precio de envío, y calificación.
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
