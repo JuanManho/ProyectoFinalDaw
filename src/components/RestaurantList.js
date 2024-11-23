@@ -3,12 +3,8 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import RestaurantCard from './RestaurantCard';
+import restaurants from '../data/restaurants';
 
-const restaurants = [
-  { name: 'Restaurant 1', type: 'Italian', deliveryTime: 30, deliveryCost: 3.99, rating: 4.5 },
-  { name: 'Restaurant 2', type: 'Chinese', deliveryTime: 25, deliveryCost: 2.99, rating: 4.7 },
-  // Añade más restaurantes aquí...
-];
 
 const RestaurantList = () => (
   <Container>
