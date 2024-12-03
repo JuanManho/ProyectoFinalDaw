@@ -1,6 +1,12 @@
 const db = require('../config/db'); // Importamos la conexión a la base de datos
 
 const User = {
+  // Obtener usuario por email
+  getByEmail: (email, callback) => {
+    const query = 'SELECT * FROM usuarios WHERE email = ?';
+    db.query(query, [email], callback);  
+  },
+
   // Obtener todos los usuarios
   getAll: (callback) => {
     const query = 'SELECT * FROM usuarios';
@@ -33,3 +39,4 @@ const User = {
 };
 
 module.exports = User;
+

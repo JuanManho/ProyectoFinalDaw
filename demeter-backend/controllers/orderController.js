@@ -2,11 +2,11 @@ const Order = require('../models/orderModel');
 
 // Obtener todos los pedidos
 const getAllOrders = (req, res) => {
-  Order.getAll((err, results) => {
+  Order.getAll((err, orders) => {
     if (err) {
-      res.status(500).json({ error: 'Error al obtener los pedidos' });
+      res.status(500).json({ error: 'Error al obtener pedidos' });
     } else {
-      res.json(results);
+      res.json(orders);
     }
   });
 };
@@ -14,18 +14,18 @@ const getAllOrders = (req, res) => {
 // Obtener un pedido por ID
 const getOrderById = (req, res) => {
   const orderId = req.params.id;
-  Order.getById(orderId, (err, result) => {
+  Order.getById(orderId, (err, order) => {
     if (err) {
       res.status(500).json({ error: 'Error al obtener el pedido' });
-    } else if (result.length === 0) {
+    } else if (!order) {
       res.status(404).json({ message: 'Pedido no encontrado' });
     } else {
-      res.json(result[0]);
+      res.json(order);
     }
   });
 };
 
-// Crear un nuevo pedido
+// Crear un pedido
 const createOrder = (req, res) => {
   const newOrder = req.body;
   Order.create(newOrder, (err, result) => {
@@ -40,8 +40,8 @@ const createOrder = (req, res) => {
 // Actualizar el estado de un pedido
 const updateOrderStatus = (req, res) => {
   const orderId = req.params.id;
-  const { estado } = req.body; // Recibe el estado en el cuerpo de la solicitud
-  Order.updateStatus(orderId, estado, (err) => {
+  const newStatus = req.body.status;
+  Order.updateStatus(orderId, newStatus, (err) => {
     if (err) {
       res.status(500).json({ error: 'Error al actualizar el estado del pedido' });
     } else {
@@ -62,4 +62,45 @@ const deleteOrder = (req, res) => {
   });
 };
 
-module.exports = { getAllOrders, getOrderById, createOrder, updateOrderStatus, deleteOrder };
+// Obtener historial de pedidos de un usuario
+const getUserOrderHistory = (req, res) => {
+  const userId = req.params.id;
+  Order.getByUserId(userId, (err, orders) => {
+    if (err) {
+      res.status(500).json({ error: 'Error al obtener el historial de pedidos' });
+    } else {
+      res.json(orders);
+    }
+  });
+};
+
+const getOrdersByRestaurant = (req, res) => {
+  const restaurantId = req.params.id;
+  Order.getByRestaurantId(restaurantId, (err, orders) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error al obtener pedidos del restaurante' });
+    }
+    res.json(orders);
+  });
+};
+
+const getAvailableOrders = (req, res) => {
+  Order.getAvailableOrders((err, orders) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error al obtener pedidos disponibles' });
+    }
+    res.json(orders);
+  });
+};
+
+
+module.exports = {
+  getAllOrders,
+  getOrderById,
+  createOrder,
+  updateOrderStatus,
+  deleteOrder,
+  getUserOrderHistory,
+  getOrdersByRestaurant,
+  getAvailableOrders,
+};

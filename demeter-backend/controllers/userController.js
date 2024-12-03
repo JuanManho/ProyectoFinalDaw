@@ -62,4 +62,54 @@ const deleteUser = (req, res) => {
   });
 };
 
-module.exports = { getAllUsers, getUserById, createUser, updateUser, deleteUser };
+// Iniciar sesión
+const loginUser = (req, res) => {
+
+  const { email, contraseña } = req.body;
+
+  // Validar que se reciban email y contraseña
+  if (!email || !contraseña) {
+    return res.status(400).json({ message: 'Email y contraseña son obligatorios' });
+  }
+
+  // Buscar usuario por email
+  User.getByEmail(email, (err, result) => {
+    if (err) {
+      console.error('Error al buscar usuario:', err); // Registro en consola para depuración
+      return res.status(500).json({ message: 'Error al buscar el usuario' });
+    }
+
+    // Verificar si el usuario existe
+    if (result.length === 0) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    const user = result[0];
+
+    // Verificar contraseña
+    if (user.contraseña.trim() !== contraseña.trim()) {
+      return res.status(401).json({ message: 'Contraseña incorrecta' });
+    }
+
+    // Responder con éxito y enviar datos del usuario
+    return res.status(200).json({
+      message: 'Inicio de sesión exitoso',
+      user: {
+        id: user.id,
+        nombre: user.nombre,
+        email: user.email,
+        rol: user.rol,
+      },
+    });
+  });
+};
+
+
+module.exports = {
+  getAllUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser,
+  loginUser, // Exportar la función de inicio de sesión
+};

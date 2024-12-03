@@ -13,7 +13,7 @@ const Order = {
     db.query(query, [id], callback);
   },
 
-  // Crear un nuevo pedido
+  // Crear un pedido
   create: (orderData, callback) => {
     const query = 'INSERT INTO pedidos SET ?';
     db.query(query, orderData, callback);
@@ -29,6 +29,36 @@ const Order = {
   delete: (id, callback) => {
     const query = 'DELETE FROM pedidos WHERE id = ?';
     db.query(query, [id], callback);
+  },
+
+  // Obtener pedidos por ID de usuario
+  getByUserId: (userId, callback) => {
+    const query = `
+      SELECT o.id, o.total, o.fecha, r.nombre AS restaurante
+      FROM pedidos o
+      JOIN restaurantes r ON o.id_restaurante = r.id
+      WHERE o.id_usuario = ?`;
+    db.query(query, [userId], callback);
+  },
+
+  // Obtener pedidos por ID de restaurante
+  getByRestaurantId: (restaurantId, callback) => {
+    const query = `
+      SELECT o.id, o.total, o.fecha, o.estado, u.nombre AS cliente
+      FROM pedidos o
+      JOIN usuarios u ON o.id_usuario = u.id
+      WHERE o.id_restaurante = ?`;
+    db.query(query, [restaurantId], callback);
+  },
+
+  // Obtener pedidos disponibles para repartidores
+  getAvailableOrders: (callback) => {
+    const query = `
+      SELECT o.id, o.total, o.fecha, r.nombre AS restaurante
+      FROM pedidos o
+      JOIN restaurantes r ON o.id_restaurante = r.id
+      WHERE o.estado = 'pendiente'`;
+    db.query(query, callback);
   },
 };
 
