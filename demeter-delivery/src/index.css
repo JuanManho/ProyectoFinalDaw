@@ -1,0 +1,38 @@
+/* Establecer la fuente EB Garamond como predeterminada */
+:root {
+  --bs-body-font-family: 'EB Garamond', serif; /* Sobrescribe Bootstrap */
+}
+
+/* Incluir fuente personalizada */
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('/public/fonts/EBGaramond-Regular.ttf') format('truetype'); /* Corregido 'ttf' a 'truetype' */
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Aplicar la fuente globalmente */
+body, h1, h2, h3, h4, h5, h6, p, a, button, input, textarea, select {
+  font-family: 'EB Garamond', serif !important; /* Asegura que se aplique */
+  margin: 0; /* Elimina márgenes predeterminados */
+  padding: 0; /* Elimina rellenos predeterminados */
+  -webkit-font-smoothing: antialiased; /* Suavizado de fuentes */
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box; /* Configura el modelo de caja */
+}
+
+/* Ajustar body y html */
+html, body {
+  height: 100%; /* Ocupan toda la altura de la ventana */
+}
+
+/* Configuración del contenedor principal */
+.app-container {
+  display: grid; /* Activa CSS Grid */
+  grid-template-rows: auto 1fr auto; /* Cabecera, contenido, footer */
+  min-height: 100vh; /* Asegura que ocupe al menos toda la ventana */
+}
+
+main {
+  padding: 1rem; /* Espaciado interno */
+}

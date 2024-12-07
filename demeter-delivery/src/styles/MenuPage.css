@@ -1,0 +1,26 @@
+.menu-card {
+    position: relative; /* Necesario para posicionar el efecto dentro del contenedor */
+  }
+  
+  .add-to-cart-effect {
+    position: absolute;
+    top: 50%;
+    right: -60px;
+    transform: translate(0, -50%);
+    font-size: 2rem;
+    font-weight: bold;
+    color: green;
+    animation: fadeOut 1.5s ease-in-out forwards;
+  }
+  
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+      transform: translate(0, -50%);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(0, -150%);
+    }
+  }
+  
