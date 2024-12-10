@@ -1,9 +1,12 @@
 import React from 'react';
+import '../styles/Footer.css'; // Archivo CSS específico para el footer
 
 const Footer = () => (
-  <footer className="text-center py-4 mt-5 bg-light" >
-    <img src="https://via.placeholder.com/50" alt="Logo" />
-    <p>© Demeter Delivery | Aviso legal</p>
+  <footer className="footer">
+    <div className="footer-content">
+      <img src="/images/components/LogoDemeterSinFondo.png" alt="Logo" className="footer-logo" />
+      <p className="footer-text">© Demeter Delivery | Aviso legal</p>
+    </div>
   </footer>
 );
 

@@ -1,20 +1,33 @@
 import React, { useContext } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Añadido useNavigate
 import { UserContext } from '../context/UserContext'; // Importa el contexto del usuario
 import '../styles/AppNavBar.css';
 
 const AppNavBar = () => {
   const { user, logout } = useContext(UserContext); // Obtén el usuario y la función de logout
+  const navigate = useNavigate(); // Hook para redirigir
+
+  const handleUserNavigation = () => {
+    if (user) {
+      if (user.rol === 'propietario' && user.restaurantId) {
+        navigate(`/owner`); // Usa el restaurantId del localStorage
+      } else {
+        navigate('/user'); // Redirigir a perfil general
+      }
+    }
+  };
 
   return (
     <Navbar className="custom-navbar" expand="lg">
       <Container>
-        <Navbar.Brand as={Link} to="/"><img
-          src="/images/components/LogoDemeterSinFondo.png" // Ruta de tu logo
-          alt="Demeter Delivery Logo"
-          className="navbar-logo" // Clase CSS para el logo
-        /></Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">
+          <img
+            src="/images/components/LogoDemeterSinFondo.png" // Ruta de tu logo
+            alt="Demeter Delivery Logo"
+            className="navbar-logo" // Clase CSS para el logo
+          />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
@@ -23,7 +36,9 @@ const AppNavBar = () => {
 
             {user ? ( // Si el usuario está logueado
               <>
-                <Nav.Link as={Link} to="/user">Hola, {user.nombre}</Nav.Link>
+                <Nav.Link onClick={handleUserNavigation}>
+                  Hola, {user.nombre}
+                </Nav.Link>
                 <Nav.Link onClick={logout}>Cerrar sesión</Nav.Link>
               </>
             ) : ( // Si no hay usuario logueado

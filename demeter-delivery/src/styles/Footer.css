@@ -1,0 +1,25 @@
+.footer {
+    background: url('/C:/Users/JRH/OneDrive/DAW/ProyectoDAW/demeter-delivery/public/images/components/FondoCabPie.jpg') no-repeat center center; 
+    background-size: cover; /* Asegura que el fondo ocupe todo el footer */
+    text-align: center; 
+    color: #A6A6A6; 
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .footer-logo {
+    height: 100px; /* Ajusta el tamaño del logo */
+    width: auto; /* Mantén la proporción */
+
+  }
+  
+  .footer-text {
+    font-size: 0.9rem; /* Tamaño de texto */
+    margin: 0;
+  }
+  

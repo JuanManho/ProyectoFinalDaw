@@ -55,7 +55,7 @@ const Login = () => {
       if (data.user.rol === 'cliente') {
         navigate('/cliente');
       } else if (data.user.rol === 'propietario') {
-        navigate('/propietario');
+        navigate('/owner');
       } else if (data.user.rol === 'repartidor') {
         navigate('/repartidor');
       }
@@ -101,3 +101,4 @@ const Login = () => {
 };
 
 export default Login;
+

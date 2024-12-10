@@ -15,7 +15,7 @@ const DeliveryOrders = () => {
 
   const acceptOrder = (orderId) => {
     console.log(`Pedido ${orderId} aceptado para reparto`);
-    // Aquí puedes implementar la lógica para marcarlo como "en reparto"
+   
   };
 
   return (

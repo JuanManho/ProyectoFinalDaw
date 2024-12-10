@@ -13,6 +13,7 @@
 
 /* Aplicar la fuente globalmente */
 body, h1, h2, h3, h4, h5, h6, p, a, button, input, textarea, select {
+ 
   font-family: 'EB Garamond', serif !important; /* Asegura que se aplique */
   margin: 0; /* Elimina márgenes predeterminados */
   padding: 0; /* Elimina rellenos predeterminados */
@@ -22,7 +23,16 @@ body, h1, h2, h3, h4, h5, h6, p, a, button, input, textarea, select {
 }
 
 /* Ajustar body y html */
-html, body {
+
+
+body {
+  background-color: #1C3C5A !important;
+  color: #A6A6A6 !important;
+  margin: 0;
+  font-family: 'EB Garamond', serif; /* Mantén el estilo de la fuente */
+  min-height: 100vh; /* Asegura que el fondo cubra toda la ventana */
+}
+html {
   height: 100%; /* Ocupan toda la altura de la ventana */
 }
 

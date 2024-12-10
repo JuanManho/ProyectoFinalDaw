@@ -1,0 +1,70 @@
+/* Estilo general para el contenedor */
+.table-container {
+    margin: 20px auto;
+    max-width: 90%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo para la tabla */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'EB Garamond', serif !important;
+    color: #A6A6A6 !important;
+    font-weight: bold;
+  }
+  
+  /* Encabezado de la tabla */
+  .table th {
+    background-color: #0056b3;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+    color: #A6A6A6 !important;
+  }
+  
+  /* Filas de la tabla */
+  .table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    color: #A6A6A6 !important;
+    font-weight: bold;
+  }
+  
+  /* Efecto hover en las filas */
+  .table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Ajustes para las celdas */
+  .table td:first-child,
+  .table th:first-child {
+    text-align: left; /* Alinear la primera columna a la izquierda */
+  }
+  
+  /* Alinear texto del encabezado */
+  .table thead th {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  
+  /* Espaciado entre tablas */
+  .table + .table {
+    margin-top: 20px;
+  }
+  
+  /* Texto del título */
+  .table-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  

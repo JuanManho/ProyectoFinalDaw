@@ -30,6 +30,10 @@ const User = {
     const query = 'UPDATE usuarios SET ? WHERE id = ?';
     db.query(query, [userData, id], callback);
   },
+  getRestaurantByOwnerId: (ownerId, callback) => {
+    const query = 'SELECT id FROM restaurantes WHERE id_propietario = ?';
+    db.query(query, [ownerId], callback);
+  },
 
   // Eliminar un usuario por ID
   delete: (id, callback) => {
@@ -37,6 +41,9 @@ const User = {
     db.query(query, [id], callback);
   },
 };
+
+ 
+
 
 module.exports = User;
 

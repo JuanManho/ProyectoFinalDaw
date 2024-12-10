@@ -64,7 +64,6 @@ const deleteUser = (req, res) => {
 
 // Iniciar sesión
 const loginUser = (req, res) => {
-
   const { email, contraseña } = req.body;
 
   // Validar que se reciban email y contraseña
@@ -91,19 +90,46 @@ const loginUser = (req, res) => {
       return res.status(401).json({ message: 'Contraseña incorrecta' });
     }
 
-    // Responder con éxito y enviar datos del usuario
-    return res.status(200).json({
-      message: 'Inicio de sesión exitoso',
-      user: {
-        id: user.id,
-        nombre: user.nombre,
-        email: user.email,
-        rol: user.rol,
-      },
-    });
+    // Si el usuario es propietario, buscar su restaurante
+    if (user.rol === 'propietario') {
+      User.getRestaurantByOwnerId(user.id, (err, restaurantResult) => {
+        if (err) {
+          console.error('Error al buscar restaurante del propietario:', err);
+          return res.status(500).json({ message: 'Error al obtener el restaurante del propietario' });
+        }
+
+        if (restaurantResult.length === 0) {
+          return res.status(404).json({ message: 'El propietario no tiene un restaurante asociado' });
+        }
+
+        const restaurantId = restaurantResult[0].id;
+
+        // Responder con éxito y enviar datos del usuario y el restaurantId
+        return res.status(200).json({
+          message: 'Inicio de sesión exitoso',
+          user: {
+            id: user.id,
+            nombre: user.nombre,
+            email: user.email,
+            rol: user.rol,
+            restaurantId, 
+          },
+        });
+      });
+    } else {
+      // Para roles distintos de propietario
+      return res.status(200).json({
+        message: 'Inicio de sesión exitoso',
+        user: {
+          id: user.id,
+          nombre: user.nombre,
+          email: user.email,
+          rol: user.rol,
+        },
+      });
+    }
   });
 };
-
 
 module.exports = {
   getAllUsers,
@@ -111,5 +137,6 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
-  loginUser, // Exportar la función de inicio de sesión
+  loginUser, 
 };
+

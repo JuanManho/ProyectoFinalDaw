@@ -5,7 +5,6 @@ import config from '../config'; // Configuración para la API
 import { CartContext } from '../context/CartContext'; // Importa el contexto del carrito
 import '../styles/MenuPage.css';
 
-
 const MenuPage = () => {
   const { id } = useParams(); // Obtener el ID del restaurante de la URL
   const [menu, setMenu] = useState([]);
@@ -31,6 +30,7 @@ const MenuPage = () => {
       name: dish.nombre_plato,
       price: dish.precio,
       quantity: 1,
+      restaurantId: parseInt(id), // Asignar el ID del restaurante
     };
     addToCart(cartItem); // Añadir el plato al carrito
 
@@ -51,12 +51,11 @@ const MenuPage = () => {
                 <Card.Text>{dish.descripcion}</Card.Text>
                 <Card.Text>{dish.precio.toFixed(2)} €</Card.Text>
                 <Button onClick={() => handleAddToCart(dish)} variant="primary" style={{ position: 'relative' }}>
-                      Añadir al Carrito
-                      {showEffect === dish.id && (
-                      <span className="add-to-cart-effect">+1</span> /* Ajustamos el span para que esté dentro del botón */
-                      )}
+                  Añadir al Carrito
+                  {showEffect === dish.id && (
+                    <span className="add-to-cart-effect">+1</span>
+                  )}
                 </Button>
-            
               </Card.Body>
             </Card>
           </Col>
@@ -67,4 +66,3 @@ const MenuPage = () => {
 };
 
 export default MenuPage;
-
