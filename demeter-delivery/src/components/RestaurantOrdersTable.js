@@ -8,8 +8,10 @@ const RestaurantOrdersTable = ({ orders }) => {
       <table className="table">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>Nº Pedido</th>
             <th>Cliente</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
             <th>Fecha</th>
             <th>Estado</th>
             <th>Total (€)</th>
@@ -20,8 +22,19 @@ const RestaurantOrdersTable = ({ orders }) => {
             <tr key={order.id}>
               <td>{order.id}</td>
               <td>{order.cliente}</td>
-              <td>{new Date(order.fecha_pedido).toLocaleString()}</td>
-              <td>{order.estado}</td>
+              <td>{order.telefono}</td> {/* Nueva columna Teléfono */}
+              <td>{order.direccion}</td> {/* Nueva columna Dirección */}
+              <td>
+                {new Date(order.fecha_pedido).toLocaleString('es-ES', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false, 
+                    })}
+                </td>
               <td>{order.total}</td>
             </tr>
           ))}

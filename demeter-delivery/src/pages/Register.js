@@ -68,7 +68,18 @@ const Register = () => {
           placeholder="Dirección"
           value={formData.direccion}
           onChange={handleChange}
+          required
         />
+         <input
+          type="tel"
+          id="telefono"
+          name="telefono"
+          placeholder="Teléfono"
+          value={formData.telefono}
+          onChange={handleChange}
+          required
+          />
+
         <button type="submit">Registrarse</button>
       </form>
       {message && <p>{message}</p>}

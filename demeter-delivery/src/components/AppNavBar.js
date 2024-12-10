@@ -31,7 +31,7 @@ const AppNavBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/">Inicio</Nav.Link>
+          <Nav.Link as={Link} to="/">Inicio</Nav.Link>
             <Nav.Link as={Link} to="/restaurants">Restaurantes</Nav.Link>
 
             {user ? ( // Si el usuario está logueado

@@ -156,7 +156,7 @@ const Order = {
         return reject(new Error('El ID del restaurante es requerido.'));
       }
       const query = `
-        SELECT o.id, o.total, o.fecha_pedido, o.estado, u.nombre AS cliente
+        SELECT o.id, o.total, o.fecha_pedido, o.estado, u.nombre AS cliente, u.telefono, u.direccion
         FROM pedidos o
         JOIN usuarios u ON o.id_usuario = u.id
         WHERE o.id_restaurante = ?`;

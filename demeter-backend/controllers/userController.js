@@ -28,6 +28,12 @@ const getUserById = (req, res) => {
 // Crear un nuevo usuario
 const createUser = (req, res) => {
   const newUser = req.body;
+
+  // Validar que los campos requeridos estén presentes
+  if (!newUser.nombre || !newUser.email || !newUser.contraseña || !newUser.rol) {
+    return res.status(400).json({ message: 'Nombre, email, contraseña y rol son obligatorios.' });
+  }
+
   User.create(newUser, (err, result) => {
     if (err) {
       res.status(500).json({ error: 'Error al crear el usuario' });
@@ -41,6 +47,7 @@ const createUser = (req, res) => {
 const updateUser = (req, res) => {
   const userId = req.params.id;
   const userData = req.body;
+
   User.update(userId, userData, (err) => {
     if (err) {
       res.status(500).json({ error: 'Error al actualizar el usuario' });

@@ -34,13 +34,27 @@ const UserProfile = () => {
     }
   };
 
+  // Función para formatear la fecha en formato europeo
+  const formatFechaEuropea = (fecha) => {
+    const date = new Date(fecha);
+    if (isNaN(date)) return 'Fecha no disponible';
+
+    return date.toLocaleString('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+  };
+
   return (
     <div className="user-profile">
       {userData && (
         <div>
           <h1>Bienvenido, {userData.nombre}</h1>
           <p>Email: {userData.email}</p>
-          <p>Rol: {userData.rol}</p>
         </div>
       )}
       <h2>Historial de Pedidos</h2>
@@ -50,8 +64,8 @@ const UserProfile = () => {
             <li key={order.id}>
               <p>Pedido #{order.id}</p>
               <p>Restaurante: {order.restaurante}</p>
-              <p>Total: ${order.total.toFixed(2)}</p>
-              <p>Fecha: {new Date(order.fecha).toLocaleString()}</p>
+              <p>Total: €{order.total.toFixed(2)}</p>
+              <p>Fecha: {formatFechaEuropea(order.fecha_pedido)}</p>
             </li>
           ))}
         </ul>
@@ -63,3 +77,4 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
