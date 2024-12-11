@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/AssignedReadyOrders.css';
 
 const AssignedOrdersTable = ({ orders, onMarkInTransit, onComplete }) => {
   return (
@@ -10,6 +11,7 @@ const AssignedOrdersTable = ({ orders, onMarkInTransit, onComplete }) => {
             <th>Cliente</th>
             <th>Teléfono</th>
             <th>Dirección</th>
+            <th>Restaurante</th> 
             <th>Fecha</th>
             <th>Estado</th>
             <th>Total (€)</th>
@@ -20,9 +22,10 @@ const AssignedOrdersTable = ({ orders, onMarkInTransit, onComplete }) => {
           {orders.map((order) => (
             <tr key={order.id}>
               <td>{order.id}</td>
-              <td>{order.cliente}</td>
-              <td>{order.telefono}</td>
-              <td>{order.direccion}</td>
+              <td>{order.cliente}</td> 
+              <td>{order.telefono_cliente}</td> 
+              <td>{order.direccion_cliente}</td>
+              <td>{order.restaurante}</td> 
               <td>
                 {new Date(order.fecha_pedido).toLocaleString('es-ES', {
                   day: '2-digit',

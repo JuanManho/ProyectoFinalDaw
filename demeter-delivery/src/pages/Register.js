@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import config from '../config';
+import '../styles/Register.css'; // Importa el archivo CSS
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -7,10 +8,12 @@ const Register = () => {
     email: '',
     contraseña: '',
     direccion: '',
+    telefono: '',
     rol: 'cliente', // Valor predeterminado
   });
 
   const [message, setMessage] = useState('');
+  const [isError, setIsError] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,15 +32,17 @@ const Register = () => {
         throw new Error('Error al registrar usuario');
       }
       setMessage('Usuario registrado con éxito');
+      setIsError(false);
     } catch (error) {
       setMessage('Error: ' + error.message);
+      setIsError(true);
     }
   };
 
   return (
-    <div>
-      <h1>Registro</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="register-container">
+      <form className="register-form" onSubmit={handleSubmit}>
+        <h1>Registro</h1>
         <input
           type="text"
           name="nombre"
@@ -70,19 +75,19 @@ const Register = () => {
           onChange={handleChange}
           required
         />
-         <input
+        <input
           type="tel"
-          id="telefono"
           name="telefono"
           placeholder="Teléfono"
           value={formData.telefono}
           onChange={handleChange}
           required
-          />
-
+        />
         <button type="submit">Registrarse</button>
+        {message && (
+          <p className={isError ? 'error' : 'success'}>{message}</p>
+        )}
       </form>
-      {message && <p>{message}</p>}
     </div>
   );
 };

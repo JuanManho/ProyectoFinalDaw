@@ -30,13 +30,13 @@ const DeliveryDashboard = () => {
   const fetchAssignedOrders = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
     try {
-      const response = await fetch(`${config.API_BASE_URL}/orders/user/${user.id}`);
+      const response = await fetch(`${config.API_BASE_URL}/orders/delivery-person/${user.id}`); 
       const data = await response.json();
-
+  
       if (!response.ok) {
         throw new Error(data.error || 'Error al obtener pedidos asignados.');
       }
-
+  
       setAssignedOrders(data.filter((order) => order.estado !== 'entregado'));
     } catch (err) {
       setError(err.message);

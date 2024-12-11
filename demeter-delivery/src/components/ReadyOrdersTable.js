@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/AssignedReadyOrders.css';
 
 const ReadyOrdersTable = ({ orders, onAssign }) => {
   return (
@@ -10,7 +11,9 @@ const ReadyOrdersTable = ({ orders, onAssign }) => {
             <th>Cliente</th>
             <th>Teléfono</th>
             <th>Dirección</th>
+            <th>Restaurante</th>
             <th>Fecha</th>
+            <th>Estado</th>
             <th>Total (€)</th>
             <th>Acciones</th>
           </tr>
@@ -22,6 +25,7 @@ const ReadyOrdersTable = ({ orders, onAssign }) => {
               <td>{order.cliente}</td>
               <td>{order.telefono}</td>
               <td>{order.direccion_cliente}</td>
+              <td>{order.restaurante}</td>
               <td>
                 {new Date(order.fecha_pedido).toLocaleString('es-ES', {
                   day: '2-digit',
@@ -32,6 +36,7 @@ const ReadyOrdersTable = ({ orders, onAssign }) => {
                   hour12: false,
                 })}
               </td>
+              <td>{order.estado}</td>
               <td>{order.total.toFixed(2)}</td>
               <td>
                 <button onClick={() => onAssign(order.id)} className="btn btn-primary">

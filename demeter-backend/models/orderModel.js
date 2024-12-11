@@ -123,6 +123,37 @@ const Order = {
     });
   },
 
+  getOrdersByDeliveryPersonId: (userId) => {
+    return new Promise((resolve, reject) => {
+      if (!userId) {
+        return reject(new Error('El ID del repartidor es requerido.'));
+      }
+      const query = `
+        SELECT 
+          o.id, 
+          o.total, 
+          o.fecha_pedido, 
+          o.estado, 
+          r.nombre AS restaurante, 
+          r.direccion AS direccion_restaurante,
+          u.nombre AS cliente, 
+          u.telefono AS telefono_cliente, 
+          u.direccion AS direccion_cliente
+        FROM pedidos o
+        JOIN restaurantes r ON o.id_restaurante = r.id
+        JOIN usuarios u ON o.id_usuario = u.id
+        WHERE o.id_repartidor = ? AND o.estado IN ('asignado', 'en camino')
+      `;
+      db.query(query, [userId], (err, results) => {
+        if (err) {
+          console.error(`Error al obtener los pedidos del repartidor con ID ${userId}:`, err);
+          return reject(new Error('Error al obtener los pedidos del repartidor.'));
+        }
+        resolve(results);
+      });
+    });
+  },
+
   // Obtener detalles de un pedido por ID
   getDetailsById: (id) => {
     return new Promise((resolve, reject) => {

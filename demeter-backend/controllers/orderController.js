@@ -221,6 +221,20 @@ const getReadyOrders = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener pedidos listos.' });
   }
 };
+const getDeliveryPersonOrders = async (req, res) => {
+  try {
+    const userId = parseInt(req.params.id, 10);
+    if (isNaN(userId)) {
+      return res.status(400).json({ error: 'El ID del repartidor debe ser un número válido.' });
+    }
+
+    const orders = await Order.getOrdersByDeliveryPersonId(userId);
+    res.json(orders);
+  } catch (err) {
+    console.error(`Error al obtener los pedidos del repartidor con ID ${req.params.id}:`, err);
+    res.status(500).json({ error: 'Error al obtener los pedidos del repartidor.' });
+  }
+};
 
 
 
@@ -238,5 +252,6 @@ module.exports = {
   assignOrder,
   markOrderInTransit,
   completeOrder,
-  getReadyOrders
+  getReadyOrders,
+  getDeliveryPersonOrders
 };

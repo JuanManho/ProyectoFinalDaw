@@ -14,6 +14,7 @@ const {
   markOrderInTransit,
   completeOrder,
   getReadyOrders,
+  getDeliveryPersonOrders,
 } = require('../controllers/orderController');
 
 const router = express.Router();
@@ -21,6 +22,7 @@ const router = express.Router();
 
 router.get('/ready', getReadyOrders); // Obtener pedidos listos
 router.get('/user/:id', getUserOrderHistory); // Obtener historial de pedidos de un usuario
+router.get('/delivery-person/:id', getDeliveryPersonOrders); // Obtener pedidos asignados a un repartidor
 router.get('/restaurant/:id', getOrdersByRestaurant); // Obtener pedidos de un restaurante
 router.get('/available', getAvailableOrders); // Obtener pedidos disponibles para repartidores
 router.get('/details/:id', getOrderDetails); // Nueva ruta para obtener detalles de un pedido
