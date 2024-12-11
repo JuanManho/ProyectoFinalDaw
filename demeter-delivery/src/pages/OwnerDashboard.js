@@ -40,6 +40,27 @@ const OwnerDashboard = () => {
     fetchOrders();
   }, [navigate]);
 
+  const handleMarkReady = async (orderId) => {
+    try {
+      const response = await fetch(`${config.API_BASE_URL}/orders/${orderId}/ready`, {
+        method: 'PUT',
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error al marcar el pedido como preparado');
+      }
+  
+      // Actualizar el estado local para reflejar el cambio
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.id === orderId ? { ...order, estado: 'listo' } : order // Cambiar a 'listo'
+        )
+      );
+    } catch (error) {
+      console.error('Error al marcar el pedido como preparado:', error.message);
+    }
+  };
+
   return (
     <div>
       <h1>Pedidos del Restaurante</h1>
@@ -48,7 +69,7 @@ const OwnerDashboard = () => {
       ) : orders.length === 0 ? (
         <p>No hay pedidos para mostrar.</p>
       ) : (
-        <RestaurantOrdersTable orders={orders} /> // Usar el componente de tabla reutilizable
+        <RestaurantOrdersTable orders={orders} onMarkReady={handleMarkReady} /> // Pasar la función como prop
       )}
     </div>
   );

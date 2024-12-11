@@ -12,6 +12,7 @@ import Restaurants from './pages/Restaurants';
 import MenuPage from './pages/MenuPage';
 import RestaurantOrders from './pages/RestaurantOrders';
 import OwnerDashboard from './pages/OwnerDashboard';
+import DeliveryDashboard from './pages/DeliveryDashboard'; 
 
 // Componente para manejar la lógica de la clase "main-home"
 const MainWithLocation = () => {
@@ -32,6 +33,7 @@ const MainWithLocation = () => {
         <Route path="/cliente" element={<UserProfile />} />
         <Route path="/restaurant/:id/orders" element={<RestaurantOrders />} />
         <Route path="/owner" element={<OwnerDashboard />} />
+        <Route path="/repartidor" element={<DeliveryDashboard />} />
       </Routes>
     </main>
   );

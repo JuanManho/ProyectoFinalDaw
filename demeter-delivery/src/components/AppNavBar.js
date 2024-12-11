@@ -31,7 +31,7 @@ const AppNavBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-          <Nav.Link as={Link} to="/">Inicio</Nav.Link>
+            <Nav.Link as={Link} to="/">Inicio</Nav.Link>
             <Nav.Link as={Link} to="/restaurants">Restaurantes</Nav.Link>
 
             {user ? ( // Si el usuario está logueado
@@ -39,6 +39,9 @@ const AppNavBar = () => {
                 <Nav.Link onClick={handleUserNavigation}>
                   Hola, {user.nombre}
                 </Nav.Link>
+                {user.rol === 'repartidor' && ( // Mostrar solo para repartidores
+                  <Nav.Link as={Link} to="/repartidor">Panel de Repartidor</Nav.Link>
+                )}
                 <Nav.Link onClick={logout}>Cerrar sesión</Nav.Link>
               </>
             ) : ( // Si no hay usuario logueado

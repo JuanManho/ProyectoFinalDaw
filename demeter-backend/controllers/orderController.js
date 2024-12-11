@@ -56,7 +56,7 @@ const createOrder = async (req, res) => {
       return res.status(400).json({ message: 'Datos incompletos para crear el pedido.' });
     }
 
-    const pedidoData = { total, id_usuario, id_restaurante, estado: 'pendiente', fecha_pedido: new Date() };
+    const pedidoData = { total, id_usuario, id_restaurante, estado: 'en preparación', fecha_pedido: new Date() };
     const result = await Order.create(pedidoData);
     const id_pedido = result.insertId;
 
@@ -143,8 +143,86 @@ const getAvailableOrders = async (req, res) => {
   } catch (err) {
     console.error('Error al obtener pedidos disponibles:', err);
     res.status(500).json({ error: 'Error al obtener pedidos disponibles.' });
+  
   }
 };
+
+const markOrderAsReady = async (req, res) => {
+  const orderId = parseInt(req.params.id, 10); // Asegúrate de que sea un número
+
+  if (isNaN(orderId)) {
+    return res.status(400).json({ error: 'ID del pedido no válido.' });
+  }
+
+  try {
+    // Usar el modelo para actualizar el estado del pedido
+    await Order.updateStatus(orderId, 'listo'); // Cambia el estado a "listo"
+    res.status(200).json({ message: 'Pedido marcado como preparado para recoger.' });
+  } catch (error) {
+    console.error(`Error al marcar el pedido ${orderId} como preparado:`, error);
+    res.status(500).json({ error: 'Error al actualizar el estado del pedido.' });
+  }
+};
+
+const assignOrder = async (req, res) => {
+  const { orderId, repartidorId } = req.body;
+
+  try {
+    if (!orderId || !repartidorId) {
+      return res.status(400).json({ error: 'OrderId y RepartidorId son requeridos.' });
+    }
+
+    await Order.assignOrder(orderId, repartidorId);
+    res.status(200).json({ message: 'Pedido asignado correctamente.' });
+  } catch (error) {
+    console.error('Error al asignar el pedido:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const markOrderInTransit = async (req, res) => {
+  const { orderId } = req.body;
+
+  try {
+    if (!orderId) {
+      return res.status(400).json({ error: 'OrderId es requerido.' });
+    }
+
+    await Order.markOrderInTransit(orderId);
+    res.status(200).json({ message: 'Pedido marcado como en camino.' });
+  } catch (error) {
+    console.error('Error al marcar el pedido como en camino:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const completeOrder = async (req, res) => {
+  const { orderId } = req.body;
+
+  try {
+    if (!orderId) {
+      return res.status(400).json({ error: 'OrderId es requerido.' });
+    }
+
+    await Order.completeOrder(orderId);
+    res.status(200).json({ message: 'Pedido completado con éxito.' });
+  } catch (error) {
+    console.error('Error al completar el pedido:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getReadyOrders = async (req, res) => {
+  try {
+    const orders = await Order.getReadyOrders();
+    res.status(200).json(orders);
+  } catch (err) {
+    console.error('Error al obtener pedidos listos:', err.message);
+    res.status(500).json({ error: 'Error al obtener pedidos listos.' });
+  }
+};
+
+
 
 module.exports = {
   getAllOrders,
@@ -156,4 +234,9 @@ module.exports = {
   getOrdersByRestaurant,
   getAvailableOrders,
   getOrderDetails,
+  markOrderAsReady,
+  assignOrder,
+  markOrderInTransit,
+  completeOrder,
+  getReadyOrders
 };

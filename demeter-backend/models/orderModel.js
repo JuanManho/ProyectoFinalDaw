@@ -187,6 +187,96 @@ const Order = {
       });
     });
   },
+  assignOrder: (orderId, repartidorId) => {
+    return new Promise((resolve, reject) => {
+      const query = `
+        UPDATE pedidos 
+        SET estado = 'asignado', id_repartidor = ? 
+        WHERE id = ? AND estado = 'listo'
+      `;
+      db.query(query, [repartidorId, orderId], (err, result) => {
+        if (err) {
+          console.error(`Error al asignar el pedido ${orderId} al repartidor ${repartidorId}:`, err);
+          return reject(new Error('Error al asignar el pedido.'));
+        }
+        if (result.affectedRows === 0) {
+          return reject(new Error('El pedido ya fue asignado o no está listo.'));
+        }
+        resolve(result);
+      });
+    });
+  },
+
+  markOrderInTransit: (orderId) => {
+    return new Promise((resolve, reject) => {
+      const query = `
+        UPDATE pedidos 
+        SET estado = 'en camino' 
+        WHERE id = ? AND estado = 'asignado'
+      `;
+      db.query(query, [orderId], (err, result) => {
+        if (err) {
+          console.error(`Error al marcar el pedido ${orderId} como en camino:`, err);
+          return reject(new Error('Error al marcar el pedido como en camino.'));
+        }
+        if (result.affectedRows === 0) {
+          return reject(new Error('El pedido no está en estado asignado.'));
+        }
+        resolve(result);
+      });
+    });
+  },
+
+  completeOrder: (orderId) => {
+    return new Promise((resolve, reject) => {
+      const query = `
+        UPDATE pedidos 
+        SET estado = 'entregado' 
+        WHERE id = ? AND estado = 'en camino'
+      `;
+      db.query(query, [orderId], (err, result) => {
+        if (err) {
+          console.error(`Error al completar el pedido ${orderId}:`, err);
+          return reject(new Error('Error al completar el pedido.'));
+        }
+        if (result.affectedRows === 0) {
+          return reject(new Error('El pedido no está en estado en camino.'));
+        }
+        resolve(result);
+      });
+    });
+  },
+  getReadyOrders: () => {
+    return new Promise((resolve, reject) => {
+      const query = `
+        SELECT 
+          o.id, 
+          o.total, 
+          o.fecha_pedido, 
+          o.estado, 
+          r.nombre AS restaurante, 
+          r.direccion AS direccion_restaurante, 
+          u.nombre AS cliente, 
+          u.telefono, 
+          u.direccion AS direccion_cliente
+        FROM pedidos o
+        JOIN restaurantes r ON o.id_restaurante = r.id
+        JOIN usuarios u ON o.id_usuario = u.id
+        WHERE o.estado = "listo"
+      `;
+      db.query(query, (err, results) => {
+        if (err) {
+          console.error('Error al obtener pedidos listos:', err);
+          return reject(new Error('Error al obtener pedidos listos.'));
+        }
+        resolve(results);
+      });
+    });
+  },
+  
+
+
+
 };
 
 module.exports = Order;
